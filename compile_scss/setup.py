@@ -4,8 +4,8 @@ with open("README.md") as readme:
     long_description = readme.read()
 
 setup(
-    name="Compile SCSS",
-    version="1.0.0",
+    name="compile_scss",
+    version="1.0.1",
     description="Compile multiple SCSS files into a single CSS file",
     long_description=long_description,
     long_description_content_type="text/markdown",
