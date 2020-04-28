@@ -58,22 +58,21 @@ def compile_scss(root, set_config, watch): #(root, scss_dir, css_dir, css_filena
     file_tree = get_include_paths(scss_dir)
     raw_scss = get_raw_scss(file_tree, scss_dir)
     
-    write_css(raw_scss, config)
 
     # start the watchdog observer if --watch flag present
     if watch:
         observer = create_observer(config)
-        click.echo(observer)
 
         observer.start()
+        echo(f"\nWatching {config['scss_dir']}...")
+        echo("Press Ctrl + C to stop.")
 
         try:
-            print(f"\nWatching {config['scss_dir']}...")
-            print("Press Ctrl + C to stop.")
             while True:
                 time.sleep(1)
-        except sass.CompileError as error:
-            print('AAAND THATS AN ERROR')
         except KeyboardInterrupt:
             observer.stop()
-            observer.join()
+        observer.join()
+    else:
+        write_css(raw_scss, config)
+        

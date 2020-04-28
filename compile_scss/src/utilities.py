@@ -2,7 +2,7 @@ import json
 import sass
 import click
 import re
-from os import path, listdir, remove, walk, getcwd, access, R_OK
+from os import path, listdir, remove, walk, getcwd, access, R_OK, system
 from shutil import copyfile
 
 VALID_OUTPUT_STYLES = [
@@ -178,10 +178,18 @@ def write_css(raw_scss, config):
 
                 # write new contents
                 css_file.write(compiled_css)
+
     except sass.CompileError as error:
-        click.echo("WHOOPS")
+        system('cls')
+        system('clear')
+    
         click.echo(error)
         return False
+
+    system('cls')
+    system('clear')    
+    click.echo("CSS written successfully!")
+    
     return True
 
 
@@ -291,6 +299,8 @@ def valid_output_style(config):
         return False
     
     return True
+
+
 def config_is_valid(config):
     '''
     Validate each option in the configuration file for Compile SCSS. 

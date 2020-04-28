@@ -1,5 +1,6 @@
 import time
-from click import echo 
+from click import echo
+from os import system 
 from src.utilities import get_raw_scss, write_css, get_include_paths
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
@@ -31,8 +32,14 @@ def create_observer(config):
         raw_scss = get_raw_scss(file_tree, scss_dir)
         write_css(raw_scss, config)
 
+        echo(f"\nWatching {config['scss_dir']}...")
+        echo("Press Ctrl + C to stop.")
 
-    fileChangeHandler.on_any_event = on_change
+
+    fileChangeHandler.on_modified = on_change
+    fileChangeHandler.on_created  = on_change
+    fileChangeHandler.on_moved    = on_change
+    fileChangeHandler.on_deleted  = on_change
 
     path = config['scss_dir']
     observer = Observer()
