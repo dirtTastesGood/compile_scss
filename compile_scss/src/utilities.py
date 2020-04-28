@@ -162,25 +162,27 @@ def write_css(raw_scss, config):
         Creates a new css file in the target CSS directory if it doesn't exist,
             then overwrites all contents with the compiled CSS.
     '''
+    try:
+        if raw_scss != '':
+            compiled_css = sass.compile(
+                string=raw_scss, 
+                output_style=f"{config['output_style']}"
+            )
 
-    if raw_scss != '':
-        compiled_css = sass.compile(
-            string=raw_scss, 
-            output_style=f"{config['output_style']}"
-        )
+            new_file_path = config['css_dir'] + config['css_filename']
 
-        new_file_path = config['css_dir'] + config['css_filename']
+            # open the target css file, otherwise create it
+            with open(new_file_path, 'a+') as css_file:
+                # remove all contents
+                css_file.truncate(0)
 
-        # open the target css file, otherwise create it
-        with open(new_file_path, 'a+') as css_file:
-            # remove all contents
-            css_file.truncate(0)
-
-            # write new contents
-            css_file.write(compiled_css)
-    else:
-        return "NO SCSS FOUND"
-    return 
+                # write new contents
+                css_file.write(compiled_css)
+    except sass.CompileError as error:
+        click.echo("WHOOPS")
+        click.echo(error)
+        return False
+    return True
 
 
 def read_config_file(root):

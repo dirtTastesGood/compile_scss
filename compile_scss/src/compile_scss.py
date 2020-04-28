@@ -62,4 +62,18 @@ def compile_scss(root, set_config, watch): #(root, scss_dir, css_dir, css_filena
 
     # start the watchdog observer if --watch flag present
     if watch:
-       create_observer(config)
+        observer = create_observer(config)
+        click.echo(observer)
+
+        observer.start()
+
+        try:
+            print(f"\nWatching {config['scss_dir']}...")
+            print("Press Ctrl + C to stop.")
+            while True:
+                time.sleep(1)
+        except sass.CompileError as error:
+            print('AAAND THATS AN ERROR')
+        except KeyboardInterrupt:
+            observer.stop()
+            observer.join()
