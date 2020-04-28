@@ -6,6 +6,7 @@
 .container {
   align-items: center;
   background: #114747;
+  color: blue;
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -52,10 +53,6 @@
 
 .container .section p strong {
   text-shadow: 0 0 10px #b8dbc1;
-}
-
-.folder-tree-test {
-  color: #114747;
 }
 
 .watchdog_test {

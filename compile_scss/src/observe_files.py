@@ -12,9 +12,9 @@ def create_observer(config):
     specified in the config.
     '''
 
-    patterns = '*'
+    patterns = '*.scss'
     ignore_patterns = ''
-    ignore_directories = ''
+    ignore_directories = False
     
     fileChangeHandler = PatternMatchingEventHandler(
         patterns = patterns,  # watched patterns
@@ -31,6 +31,8 @@ def create_observer(config):
         file_tree = get_include_paths(scss_dir)
         raw_scss = get_raw_scss(file_tree, scss_dir)
         write_css(raw_scss, config)
+
+        # echo(f"File {event.event_type}: {event.src_path}")
 
         echo(f"\nWatching {config['scss_dir']}...")
         echo("Press Ctrl + C to stop.")
