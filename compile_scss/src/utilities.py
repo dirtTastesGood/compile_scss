@@ -3,7 +3,6 @@ import sass
 import click
 import re
 import sys
-import traceback
 from os import path, listdir, remove, walk, getcwd, access, R_OK, system
 
 from shutil import copyfile
@@ -175,22 +174,18 @@ def write_css(raw_scss, config):
             new_file_path = config['css_dir'] + config['css_filename']
 
             # open the target css file, otherwise create it
-            css_file = open(new_file_path, 'a+')
+            with open(new_file_path, 'a+') as css_file:
                 # remove all contents
-            css_file.truncate(0)
+                css_file.truncate(0)
 
                 # write new contents
-            css_file.write(compiled_css)
-            
-            css_file.close()
+                css_file.write(compiled_css)
 
     except sass.CompileError as error:
-        click.echo(error)
+        print(error)
         return False
-
-    else:   
+    else:
         click.echo("CSS written successfully!")
-    
         return True
 
 
