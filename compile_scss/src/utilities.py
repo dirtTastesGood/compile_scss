@@ -3,7 +3,6 @@ import sass
 import click
 import re
 import sys
-import traceback
 from os import path, listdir, remove, walk, getcwd, access, R_OK, system
 from os import name as os_name
 from shutil import copyfile
@@ -196,11 +195,13 @@ def write_css(raw_scss, config):
 
     except sass.CompileError as error:
         clear_term()
+        # print red error
         click.echo(error)
         return False
 
     else:   
         clear_term()
+        # print green success
         click.echo("CSS written successfully!")
     
         return True
