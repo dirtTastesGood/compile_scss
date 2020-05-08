@@ -192,7 +192,6 @@ def write_css(raw_scss, config):
                 css_file.write(compiled_css)
 
     except sass.CompileError as error:
-<<<<<<< HEAD
         clear_term()
         # print red error
         click.echo(error)
@@ -201,11 +200,6 @@ def write_css(raw_scss, config):
     else:   
         clear_term()
         # print green success
-=======
-        print(error)
-        return False
-    else:
->>>>>>> 2f85de1fc3a9bb60d9b40206acff4df9a50546cc
         click.echo("CSS written successfully!")
         return True
 
