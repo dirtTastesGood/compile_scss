@@ -184,16 +184,15 @@ def write_css(raw_scss, config):
             new_file_path = config['css_dir'] + config['css_filename']
 
             # open the target css file, otherwise create it
-            css_file = open(new_file_path, 'a+')
+            with open(new_file_path, 'a+') as css_file:
                 # remove all contents
-            css_file.truncate(0)
+                css_file.truncate(0)
 
                 # write new contents
-            css_file.write(compiled_css)
-            
-            css_file.close()
+                css_file.write(compiled_css)
 
     except sass.CompileError as error:
+<<<<<<< HEAD
         clear_term()
         # print red error
         click.echo(error)
@@ -202,8 +201,12 @@ def write_css(raw_scss, config):
     else:   
         clear_term()
         # print green success
+=======
+        print(error)
+        return False
+    else:
+>>>>>>> 2f85de1fc3a9bb60d9b40206acff4df9a50546cc
         click.echo("CSS written successfully!")
-    
         return True
 
 
