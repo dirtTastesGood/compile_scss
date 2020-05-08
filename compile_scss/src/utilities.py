@@ -5,7 +5,7 @@ import re
 import sys
 import traceback
 from os import path, listdir, remove, walk, getcwd, access, R_OK, system
-
+from os import name as os_name
 from shutil import copyfile
 
 VALID_OUTPUT_STYLES = [
@@ -14,6 +14,16 @@ VALID_OUTPUT_STYLES = [
     'expanded',
     'nested',
 ]
+
+def clear_term():
+    # os_name is imported from the os module 
+    # for windows 
+    if os_name == 'nt': 
+        _ = system('cls') 
+  
+    # for mac and linux(here, os.name is 'posix') 
+    else: 
+        _ = system('clear') 
 
 def error_quit(error):
     '''
@@ -185,10 +195,12 @@ def write_css(raw_scss, config):
             css_file.close()
 
     except sass.CompileError as error:
+        clear_term()
         click.echo(error)
         return False
 
     else:   
+        clear_term()
         click.echo("CSS written successfully!")
     
         return True
